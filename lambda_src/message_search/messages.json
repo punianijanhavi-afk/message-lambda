@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "user_id": "u1",
+    "user_name": "Alice Johnson",
+    "timestamp": "2025-05-05T10:00:00Z",
+    "message": "Book a private jet to Paris."
+  },
+  {
+    "id": "2",
+    "user_id": "u2",
+    "user_name": "Bob Wilson",
+    "timestamp": "2025-05-06T09:30:00Z",
+    "message": "Schedule a meeting with Tesla investors."
+  },
+  {
+    "id": "3",
+    "user_id": "u3",
+    "user_name": "Charlie Singh",
+    "timestamp": "2025-05-07T15:20:00Z",
+    "message": "Please order lunch from Chipotle."
+  },
+  {
+    "id": "4",
+    "user_id": "u4",
+    "user_name": "Diana Lopez",
+    "timestamp": "2025-05-08T12:10:00Z",
+    "message": "Find the best deal on MacBook Pro."
+  },
+  {
+    "id": "5",
+    "user_id": "u5",
+    "user_name": "Ethan Smith",
+    "timestamp": "2025-05-09T18:45:00Z",
+    "message": "Cancel my trip to Dubai."
+  }
+]
