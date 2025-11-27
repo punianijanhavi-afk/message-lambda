@@ -20,7 +20,9 @@ except FileNotFoundError:
     RAW_DATA = []
 
 # In-memory dataset used by search
-DATA = [Message(**m) for m in RAW_DATA]
+DATA = []
+for m in RAW_DATA:
+    DATA.append(Message(**m))
 
 
 # --------- Refresh from source API (used by cron) ---------
@@ -80,11 +82,12 @@ def lambda_handler(event: Dict[str, Any], _context: Any) -> Dict[str, Any]:
     q = query.lower()
 
     # Case-insensitive search in message or user_name
-    matches = [
-        msg
-        for msg in DATA
-        if q in msg.message.lower() or q in msg.user_name.lower()
-    ]
+    matches = []
+    for msg in DATA:
+        text = msg.message.lower()
+        name = msg.user_name.lower()
+        if q in text or q in name:
+            matches.append(msg)
 
     total = len(matches)
     start = (page - 1) * page_size
