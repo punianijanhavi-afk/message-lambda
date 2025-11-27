@@ -94,7 +94,7 @@ cd ..
 ### 5. API Gateway Setup
 ### 6. EventBridge Setup
 
-## Design Notes
+## Design Notes - Bonus1
 
 ### Goals and Constraints
 
@@ -171,3 +171,27 @@ A serverless design with **scheduled refresh + in-memory search** gives:
 - Very low latency
 - Simple architecture
 - Clean separation of slow and fast paths  
+
+
+### Bonus2
+
+In the current design, the slow part (fetching from the upstream API) is moved entirely to the daily refresh path. The search path is already fast (simple in-process filtering), but end-to-end latency can still be improved further:
+
+1. **Enable Lambda Provisioned Concurrency**
+  - Keep 1–2 instances of the Lambda “warm” at all times.
+  - This removes cold starts, so requests no longer pay the 100–300ms cold-start penalty.
+
+2. **Increase Lambda Memory (and CPU)**
+  - Increase memory to 256–512 MB for the search Lambda.
+  - In Lambda, more memory also gives more CPU, which reduces execution time (JSON parsing + filtering) to just a few milliseconds.
+
+3. **Keep search logic and data in global scope**
+  - The dataset is loaded once per execution environment and reused across invocations.
+  - The handler then only does: parse query params → filter list → slice for pagination → return response, which typically runs in single-digit milliseconds.
+
+4. **Precompute simple search structures (optional)**
+  - For larger datasets, build a lightweight in-memory index (e.g., mapping lowercase tokens to message IDs).
+  - This turns search from an O(N) scan into near O(1) lookups for many queries.
+
+With these optimizations (especially provisioned concurrency + higher memory), the Lambda execution time can be kept in the ~5–10ms range, and the overall end-to-end API latency (including API Gateway overhead) can realistically be brought down to around **30ms**.
+
