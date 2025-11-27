@@ -11,7 +11,7 @@ from .models import Message, SearchResponse
 BASE_URL = "https://november7-730026606190.europe-west1.run.app/messages"
 LIMIT = 2000
 
-# ---- Initial load from baked messages.json (fallback) ----
+# ---- Initial load from messages.json (fallback) ----
 DATA_PATH = Path(__file__).resolve().parent / "messages.json"
 try:
     with DATA_PATH.open("r", encoding="utf-8") as f:

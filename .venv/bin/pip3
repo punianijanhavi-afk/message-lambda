@@ -1,4 +1,4 @@
-#!/Users/janhavipuniani/Documents/message-search-lambda/.venv/bin/python3
+#!/Users/janhavipuniani/Documents/message-search-lambda/.venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
