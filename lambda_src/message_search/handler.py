@@ -9,7 +9,7 @@ from .models import Message, SearchResponse
 
 # ---- Config ----
 BASE_URL = "https://november7-730026606190.europe-west1.run.app/messages"
-LIMIT = 2000  # big page from source API (tune if you like)
+LIMIT = 2000
 
 # ---- Initial load from baked messages.json (fallback) ----
 DATA_PATH = Path(__file__).resolve().parent / "messages.json"
@@ -76,11 +76,6 @@ def lambda_handler(event: Dict[str, Any], _context: Any) -> Dict[str, Any]:
 
     if not query:
         return _response(400, {"error": "query is required"})
-
-    if page < 1:
-        page = 1
-    if page_size < 1:
-        page_size = 10
 
     q = query.lower()
 
